@@ -1,8 +1,12 @@
 # Project place file
-/CodingObby_Cur.rbxlx
+/CodingObby_Cur.rbxlX
+/CodingObby_Cur.rbxl
 
 # Roblox Studio lock files
 /*.rbxlx.lock
 /*.rbxl.lock
 
 sourcemap.json
+
+# Toml Files
+/*.toml

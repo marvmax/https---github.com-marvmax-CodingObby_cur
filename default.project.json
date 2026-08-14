@@ -21,6 +21,11 @@
           "$path": "src/client"
         }
       }
+    },
+    "Workspace": {
+      "WSServer": {
+        "$path": "src/workspace"
+      }
     }
   }
 }
