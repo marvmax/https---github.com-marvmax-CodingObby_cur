@@ -1,3 +1,1 @@
-return function()
-	print("Hello, world!")
-end
+print("Hello from replicated storage")

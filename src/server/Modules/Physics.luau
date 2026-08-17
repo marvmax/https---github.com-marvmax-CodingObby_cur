@@ -2,16 +2,17 @@ local playerService = game:GetService("Players")
 local physicsService = game:GetService("PhysicsService")
 
 local physicsMod = {}
+local COLLISION_GROUP = "Players"
 
 print("Saying hola from physics mod")
 
-physicsService:RegisterCollisionGroup("Players")
-physicsService:CollisionGroupSetCollidable("Players", "Players", false)
+physicsService:RegisterCollisionGroup(COLLISION_GROUP)
+physicsService:CollisionGroupSetCollidable(COLLISION_GROUP, COLLISION_GROUP, false)
 
 physicsMod.makeCollisionGroup = function(char)
-	for _, part in pairs(char.Children:GetDescendats()) do
+	for _, part in pairs(char:GetChildren()) do
 		if part:IsA("BasePart") then
-			part.CollisionGroup = "Players"
+			part.CollisionGroup = COLLISION_GROUP
 		end
 	end
 end

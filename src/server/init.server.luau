@@ -1,13 +1,19 @@
 print("Hello world, from server!")
 
-local mods = {}
-
 -- Mod Folders
 local workSpaceFolder = game.Workspace.WSServer
 local modsFolder = script.Modules
 
+-- Variables
+local doTest = true
+
 -- Mods
 local dataMod = require(modsFolder.Data)
-local utilitiesMod = require(modsFolder.Utilities)
-local wsServiceMod = require(workSpaceFolder.WSService)
-local physicsMod = require(script.Modules.Physics)
+dataMod.init()
+require(modsFolder.Utilities)
+require(workSpaceFolder.WSService)
+require(modsFolder.Physics)
+require(modsFolder.PartFunctions)
+if doTest then
+	require(modsFolder.TestRunner)
+end

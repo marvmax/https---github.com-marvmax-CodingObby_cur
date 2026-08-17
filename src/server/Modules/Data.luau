@@ -17,9 +17,32 @@ local defalutData = {
 	Level = 1,
 }
 
--- what the heck is this
+dataMod.init = function()
+	task.spawn(dataMod.autoSave)
+
+	playerService.PlayerAdded:Connect(function(player)
+		dataMod.setUpLeaderstats(player)
+	end)
+end
 
 print("Data loaded yay")
+
+dataMod.setUpLeaderstats = function(player)
+	print("Player joined: " .. player.Name)
+	local folder = Instance.new("Folder")
+	folder.Name = "leaderstats"
+	folder.Parent = player
+	local coins = Instance.new("IntValue")
+	coins.Name = "Coins"
+	coins.Parent = folder
+	coins.Value = defalutData.Coins
+	local stage = Instance.new("IntValue")
+	stage.Name = "Stage"
+	stage.Parent = folder
+	stage.Value = defalutData.Level
+
+	dataMod.setupData(player)
+end
 
 dataMod.setupData = function(player)
 	print("Setting up data for player: " .. player.Name)
@@ -111,17 +134,15 @@ dataMod.remove = function(player)
 	print("Data removed for player: " .. player.Name)
 end
 
-local function autoSave()
+function dataMod.autoSave()
 	while task.wait(AUTOSAVE_INTERVAL) do
 		print("Auto-saving data for all players...")
-		for key, dataTablex in sessionData do
+		for key, dataTable in sessionData do
 			local player = playerService:GetPlayerByUserId(key)
 			dataMod.save(player)
 		end
 	end
 end
-
-task.spawn(autoSave) --Initialize auto-save loop
 
 game:BindToClose(function()
 	print("Msg from BindToClose: Game is closing. Saving data for all players...")
@@ -129,23 +150,6 @@ game:BindToClose(function()
 		dataMod.save(player)
 		player:Kick("Shutting down game. All data saved")
 	end
-end)
-
-playerService.PlayerAdded:Connect(function(player)
-	print("Player joined: " .. player.Name)
-	local folder = Instance.new("Folder")
-	folder.Name = "leaderstats"
-	folder.Parent = player
-	local coins = Instance.new("IntValue")
-	coins.Name = "Coins"
-	coins.Parent = folder
-	coins.Value = defalutData.Coins
-	local stage = Instance.new("IntValue")
-	stage.Name = "Stage"
-	stage.Parent = folder
-	stage.Value = defalutData.Level
-
-	dataMod.setupData(player)
 end)
 
 playerService.PlayerRemoving:Connect(function(player)
